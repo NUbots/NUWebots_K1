@@ -4,6 +4,9 @@ Webots simulation for the **Booster Robotics K1** humanoid, used by [NUbots](htt
 RoboCup development. Forked from [NUWebots](https://github.com/NUbots/NUWebots) (the NUgus simulation),
 whose worlds and controllers remain here for the legacy R2022b setup.
 
+<img width="1824" height="1578" alt="Screenshot from 2026-06-25 23-17-30" src="https://github.com/user-attachments/assets/d2fc64cd-0cc9-497d-aa42-38583c0da04a" />
+
+
 ## How it works
 
 The K1 is **not** driven by this repo's NUgus TCP controllers. It uses the **Booster SDK over DDS** — the
