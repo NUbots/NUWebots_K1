@@ -1,0 +1,1897 @@
+#VRML_SIM R2023b utf8
+# Booster Robotics K1 humanoid (22 DOF), extracted from Booster's K1_v1.wbt.
+# The controller defaults to "<extern>" so Booster's `mck` runner drives the robot over the SDK/DDS
+# interface (the same as the real K1). Set a unique `name` per instance for multi-robot worlds.
+PROTO K1 [
+  field SFVec3f    translation    0 0 0.527
+  field SFRotation rotation       0 0 1 0
+  field SFString   name           "K1"
+  field SFString   controller     "<extern>"
+  field MFString   controllerArgs []
+  field SFBool     supervisor     TRUE
+]
+{
+  Robot {
+    translation IS translation
+    rotation IS rotation
+    children [
+    Accelerometer {
+      name "torso accelerometer"
+    }
+    GPS {
+      name "torso gps"
+    }
+    Gyro {
+      name "torso gyro"
+    }
+    InertialUnit {
+      name "torso inertial unit"
+    }
+    Shape {
+      appearance DEF trunk_link_material PBRAppearance {
+        baseColor 0.75294 0.75294 0.75294
+        roughness 1
+        metalness 0
+      }
+      geometry DEF Trunk Mesh {
+        url [
+          "./K1_meshes/Trunk.STL"
+        ]
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 0 1
+        anchor 0.0056 0 0.2149
+      }
+      device [
+        RotationalMotor {
+          name "AAHead_Yaw"
+          maxTorque 10000
+        }
+        PositionSensor {
+          name "AAHead_Yaw_sensor"
+        }
+      ]
+      endPoint Solid {
+        translation 0.0056 0 0.2149
+        children [
+          Shape {
+            appearance DEF Head_1_material PBRAppearance {
+              baseColor 0.75294 0.75294 0.75294
+              roughness 1
+              metalness 0
+            }
+            geometry DEF Head_1 Mesh {
+              url [
+                "./K1_meshes/Head_1.STL"
+              ]
+            }
+          }
+          HingeJoint {
+            jointParameters HingeJointParameters {
+              axis 0 1 0
+              anchor 0 0 0.033
+            }
+            device [
+              RotationalMotor {
+                name "Head_Pitch"
+                maxTorque 10000
+              }
+              PositionSensor {
+                name "Head_Pitch_sensor"
+              }
+            ]
+            endPoint Solid {
+              translation 0 0 0.033
+              rotation 0 1 0 0
+              children [
+                Shape {
+                  appearance DEF head_pitch_link_material PBRAppearance {
+                    baseColor 0.75294 0.75294 0.75294
+                    roughness 1
+                    metalness 0
+                  }
+                  geometry DEF Head_2 Mesh {
+                    url [
+                      "./K1_meshes/Head_2.STL"
+                    ]
+                  }
+                }
+              ]
+              name "head_pitch_link"
+              boundingObject USE Head_2
+              physics Physics {
+                density -1
+                mass 0.61387
+                centerOfMass [
+                  0.011042 -0.000929 0.080698
+                ]
+                inertiaMatrix [
+                  0.005927 0.005776 0.001807
+                  -1.2e-05 0.000664 -3.3e-05
+                ]
+              }
+            }
+          }
+        ]
+        name "Head_1"
+        boundingObject USE Head_1
+        physics Physics {
+          density -1
+          mass 0.29729
+          centerOfMass [
+            -0.000695 -0.000385 0.031688
+          ]
+          inertiaMatrix [
+            0.000429 0.000421 0.000126
+            -2e-06 -6e-06 -5e-06
+          ]
+        }
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 1 0
+        anchor 0 0.077 0.1845
+      }
+      device [
+        RotationalMotor {
+          name "ALeft_Shoulder_Pitch"
+          maxTorque 10000
+        }
+        PositionSensor {
+          name "ALeft_Shoulder_Pitch_sensor"
+        }
+      ]
+      endPoint Solid {
+        translation 0 0.077 0.1845
+        rotation 0 1 0 0
+        children [
+          Shape {
+            appearance DEF Left_Arm_1_material PBRAppearance {
+              baseColor 0.75294 0.75294 0.75294
+              roughness 1
+              metalness 0
+            }
+            geometry DEF Left_Arm_1 Mesh {
+              url [
+                "./K1_meshes/Left_Arm_1.STL"
+              ]
+            }
+          }
+          HingeJoint {
+            jointParameters HingeJointParameters {
+              anchor 0.0025 0.068 -0.0135
+            }
+            device [
+              RotationalMotor {
+                name "Left_Shoulder_Roll"
+                maxTorque 10000
+              }
+              PositionSensor {
+                name "Left_Shoulder_Roll_sensor"
+              }
+            ]
+            endPoint Solid {
+              translation 0.0025 0.068 -0.0135
+              rotation 1 0 0 0
+              children [
+                Shape {
+                  appearance DEF Left_Arm_2_material PBRAppearance {
+                    baseColor 0.75294 0.75294 0.75294
+                    roughness 1
+                    metalness 0
+                  }
+                  geometry DEF Left_Arm_2 Mesh {
+                    url [
+                      "./K1_meshes/Left_Arm_2.STL"
+                    ]
+                  }
+                }
+                HingeJoint {
+                  jointParameters HingeJointParameters {
+                    axis 0 1 0
+                    anchor 0 0.044428 0
+                  }
+                  device [
+                    RotationalMotor {
+                      name "Left_Elbow_Pitch"
+                      maxTorque 10000
+                    }
+                    PositionSensor {
+                      name "Left_Elbow_Pitch_sensor"
+                    }
+                  ]
+                  endPoint Solid {
+                    translation 0 0.044428 0
+                    rotation 0 1 0 0
+                    children [
+                      Shape {
+                        appearance DEF Left_Arm_3_material PBRAppearance {
+                          baseColor 0.75294 0.75294 0.75294
+                          roughness 1
+                          metalness 0
+                        }
+                        geometry DEF Left_Arm_3 Mesh {
+                          url [
+                            "./K1_meshes/Left_Arm_3.STL"
+                          ]
+                        }
+                      }
+                      HingeJoint {
+                        jointParameters HingeJointParameters {
+                          axis 0 0 1
+                          anchor 0 0.1215 0
+                        }
+                        device [
+                          RotationalMotor {
+                            name "Left_Elbow_Yaw"
+                            maxTorque 10000
+                          }
+                          PositionSensor {
+                            name "Left_Elbow_Yaw_sensor"
+                          }
+                        ]
+                        endPoint Solid {
+                          translation 0 0.1215 0
+                          children [
+                            Shape {
+                              appearance DEF left_forearm_pitch_link_material PBRAppearance {
+                                baseColor 0.75294 0.75294 0.75294
+                                roughness 1
+                                metalness 0
+                              }
+                              geometry DEF Left_Arm_4 Mesh {
+                                url [
+                                  "./K1_meshes/Left_Arm_4.STL"
+                                ]
+                              }
+                            }
+                          ]
+                          name "left_forearm_pitch_link"
+                          boundingObject USE Left_Arm_4
+                          physics Physics {
+                            density -1
+                            mass 0.16796
+                            centerOfMass [
+                              -0.001575 0.084637 0.008703
+                            ]
+                            inertiaMatrix [
+                              0.002056 8.2e-05 0.002029
+                              -7e-06 -2e-06 3.1e-05
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                    name "Left_Arm_3"
+                    boundingObject USE Left_Arm_3
+                    physics Physics {
+                      density -1
+                      mass 0.76208
+                      centerOfMass [
+                        -0.000398 0.072617 -0.000662
+                      ]
+                      inertiaMatrix [
+                        0.006069 0.000387 0.006067
+                        -1.7e-05 -1e-06 -7.9e-05
+                      ]
+                    }
+                  }
+                }
+              ]
+              name "Left_Arm_2"
+              boundingObject USE Left_Arm_2
+              physics Physics {
+                density -1
+                mass 0.084303
+                centerOfMass [
+                  0.01729 0.018221 -4.3e-05
+                ]
+                inertiaMatrix [
+                  9.2e-05 6.8e-05 0.000113
+                  9e-06 0 0
+                ]
+              }
+            }
+          }
+        ]
+        name "Left_Arm_1"
+        boundingObject USE Left_Arm_1
+        physics Physics {
+          density -1
+          mass 0.45628
+          centerOfMass [
+            -0.002701 0.062383 -0.011965
+          ]
+          inertiaMatrix [
+            0.002194 0.000331 0.002139
+            -8.4e-05 1.7e-05 -0.000372
+          ]
+        }
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 1 0
+        anchor 0 -0.077 0.1845
+      }
+      device [
+        RotationalMotor {
+          name "ARight_Shoulder_Pitch"
+          maxTorque 10000
+        }
+        PositionSensor {
+          name "ARight_Shoulder_Pitch_sensor"
+        }
+      ]
+      endPoint Solid {
+        translation 0 -0.077 0.1845
+        rotation 0 1 0 0
+        children [
+          Shape {
+            appearance DEF Right_Arm_1_material PBRAppearance {
+              baseColor 0.75294 0.75294 0.75294
+              roughness 1
+              metalness 0
+            }
+            geometry DEF Right_Arm_1 Mesh {
+              url [
+                "./K1_meshes/Right_Arm_1.STL"
+              ]
+            }
+          }
+          HingeJoint {
+            jointParameters HingeJointParameters {
+              anchor 0.0025 -0.068 -0.0135
+            }
+            device [
+              RotationalMotor {
+                name "Right_Shoulder_Roll"
+                maxTorque 10000
+              }
+              PositionSensor {
+                name "Right_Shoulder_Roll_sensor"
+              }
+            ]
+            endPoint Solid {
+              translation 0.0025 -0.068 -0.0135
+              rotation 1 0 0 0
+              children [
+                Shape {
+                  appearance DEF Right_Arm_2_material PBRAppearance {
+                    baseColor 0.75294 0.75294 0.75294
+                    roughness 1
+                    metalness 0
+                  }
+                  geometry DEF Right_Arm_2 Mesh {
+                    url [
+                      "./K1_meshes/Right_Arm_2.STL"
+                    ]
+                  }
+                }
+                HingeJoint {
+                  jointParameters HingeJointParameters {
+                    axis 0 1 0
+                    anchor 0 -0.044428 0
+                  }
+                  device [
+                    RotationalMotor {
+                      name "Right_Elbow_Pitch"
+                      maxTorque 10000
+                    }
+                    PositionSensor {
+                      name "Right_Elbow_Pitch_sensor"
+                    }
+                  ]
+                  endPoint Solid {
+                    translation 0 -0.044428 0
+                    rotation 0 1 0 0
+                    children [
+                      Shape {
+                        appearance DEF Right_Arm_3_material PBRAppearance {
+                          baseColor 0.75294 0.75294 0.75294
+                          roughness 1
+                          metalness 0
+                        }
+                        geometry DEF Right_Arm_3 Mesh {
+                          url [
+                            "./K1_meshes/Right_Arm_3.STL"
+                          ]
+                        }
+                      }
+                      HingeJoint {
+                        jointParameters HingeJointParameters {
+                          axis 0 0 1
+                          anchor 0 -0.1215 0
+                        }
+                        device [
+                          RotationalMotor {
+                            name "Right_Elbow_Yaw"
+                            maxTorque 10000
+                          }
+                          PositionSensor {
+                            name "Right_Elbow_Yaw_sensor"
+                          }
+                        ]
+                        endPoint Solid {
+                          translation 0 -0.1215 0
+                          children [
+                            Shape {
+                              appearance DEF right_forearm_pitch_link_material PBRAppearance {
+                                baseColor 0.75294 0.75294 0.75294
+                                roughness 1
+                                metalness 0
+                              }
+                              geometry DEF Right_Arm_4 Mesh {
+                                url [
+                                  "./K1_meshes/Right_Arm_4.STL"
+                                ]
+                              }
+                            }
+                          ]
+                          name "right_forearm_pitch_link"
+                          boundingObject USE Right_Arm_4
+                          physics Physics {
+                            density -1
+                            mass 0.16828
+                            centerOfMass [
+                              -0.001518 -0.084536 0.008673
+                            ]
+                            inertiaMatrix [
+                              0.002056 8.2e-05 0.00203
+                              5e-06 -2e-06 -3.1e-05
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                    name "Right_Arm_3"
+                    boundingObject USE Right_Arm_3
+                    physics Physics {
+                      density -1
+                      mass 0.76234
+                      centerOfMass [
+                        -0.000399 -0.072601 -0.000656
+                      ]
+                      inertiaMatrix [
+                        0.00607 0.000388 0.006068
+                        1.7e-05 -1e-06 7.9e-05
+                      ]
+                    }
+                  }
+                }
+              ]
+              name "Right_Arm_2"
+              boundingObject USE Right_Arm_2
+              physics Physics {
+                density -1
+                mass 0.083353
+                centerOfMass [
+                  0.017229 -0.018428 4.4e-05
+                ]
+                inertiaMatrix [
+                  9.2e-05 6.8e-05 0.000113
+                  -9e-06 0 0
+                ]
+              }
+            }
+          }
+        ]
+        name "Right_Arm_1"
+        boundingObject USE Right_Arm_1
+        physics Physics {
+          density -1
+          mass 0.45669
+          centerOfMass [
+            -0.00263 -0.06251 -0.01199
+          ]
+          inertiaMatrix [
+            0.0022 0.000332 0.002145
+            8.2e-05 1.7e-05 0.000373
+          ]
+        }
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 1 0
+        anchor 0 0.096 -0.062
+      }
+      device [
+        RotationalMotor {
+          name "Left_Hip_Pitch"
+          maxTorque 10000
+        }
+        PositionSensor {
+          name "Left_Hip_Pitch_sensor"
+        }
+      ]
+      endPoint Solid {
+        translation 0 0.096 -0.062
+        rotation 0 1 0 0
+        children [
+          Shape {
+            appearance DEF Left_Hip_Pitch_material PBRAppearance {
+              baseColor 0.75294 0.75294 0.75294
+              roughness 1
+              metalness 0
+            }
+            geometry DEF Left_Hip_Pitch Mesh {
+              url [
+                "./K1_meshes/Left_Hip_Pitch.STL"
+              ]
+            }
+          }
+          HingeJoint {
+            jointParameters HingeJointParameters {
+              anchor 0 0 -0.026
+            }
+            device [
+              RotationalMotor {
+                name "Left_Hip_Roll"
+                maxTorque 10000
+              }
+              PositionSensor {
+                name "Left_Hip_Roll_sensor"
+              }
+            ]
+            endPoint Solid {
+              translation 0 0 -0.026
+              rotation 1 0 0 0
+              children [
+                Shape {
+                  appearance DEF Left_Hip_Roll_material PBRAppearance {
+                    baseColor 0.75294 0.75294 0.75294
+                    roughness 1
+                    metalness 0
+                  }
+                  geometry DEF Left_Hip_Roll Mesh {
+                    url [
+                      "./K1_meshes/Left_Hip_Roll.STL"
+                    ]
+                  }
+                }
+                HingeJoint {
+                  jointParameters HingeJointParameters {
+                    axis 0 0 1
+                    anchor 0.012 0 -0.0485
+                  }
+                  device [
+                    RotationalMotor {
+                      name "Left_Hip_Yaw"
+                      maxTorque 10000
+                    }
+                    PositionSensor {
+                      name "Left_Hip_Yaw_sensor"
+                    }
+                  ]
+                  endPoint Solid {
+                    translation 0.012 0 -0.0485
+                    children [
+                      Shape {
+                        appearance DEF Left_Hip_Yaw_material PBRAppearance {
+                          baseColor 0.75294 0.75294 0.75294
+                          roughness 1
+                          metalness 0
+                        }
+                        geometry DEF Left_Hip_Yaw Mesh {
+                          url [
+                            "./K1_meshes/Left_Hip_Yaw.STL"
+                          ]
+                        }
+                      }
+                      HingeJoint {
+                        jointParameters HingeJointParameters {
+                          axis 0 1 0
+                          anchor -0.014 0 -0.117
+                        }
+                        device [
+                          RotationalMotor {
+                            name "Left_Knee_Pitch"
+                            maxTorque 10000
+                          }
+                          PositionSensor {
+                            name "Left_Knee_Pitch_sensor"
+                          }
+                        ]
+                        endPoint Solid {
+                          translation -0.014 0 -0.117
+                          rotation 0 1 0 0
+                          children [
+                            Shape {
+                              appearance DEF Left_Shank_material PBRAppearance {
+                                baseColor 0.75294 0.75294 0.75294
+                                roughness 1
+                                metalness 0
+                              }
+                              geometry DEF Left_Shank Mesh {
+                                url [
+                                  "./K1_meshes/Left_Shank.STL"
+                                ]
+                              }
+                            }
+                            HingeJoint {
+                              jointParameters HingeJointParameters {
+                                axis 0 1 0
+                                anchor 0.000197 0.0002 -0.24519
+                              }
+                              endPoint Solid {
+                                translation 0.000197 0.0002 -0.24519
+                                rotation 0 1 0 0
+                                children [
+                                  Shape {
+                                    appearance DEF Left_Ankle_Cross_material PBRAppearance {
+                                      baseColor 0.75294 0.75294 0.75294
+                                      roughness 1
+                                      metalness 0
+                                    }
+                                    geometry DEF Left_Ankle_Cross Mesh {
+                                      url [
+                                        "./K1_meshes/Left_Ankle_Cross.STL"
+                                      ]
+                                    }
+                                  }
+                                  HingeJoint {
+                                    jointParameters HingeJointParameters {
+                                    }
+                                    endPoint Solid {
+                                      rotation 1 0 0 0
+                                      children [
+                                        HingeJoint {
+                                          jointParameters HingeJointParameters {
+                                            axis 0 1 0
+                                            anchor -0.029 -0.024 0.0175
+                                            staticFriction 0.05
+                                          }
+                                          endPoint Solid {
+                                            translation -0.029 -0.024 0.0175
+                                            rotation 0 1 0 0
+                                            children [
+                                              HingeJoint {
+                                                jointParameters HingeJointParameters {
+                                                  axis 0 0 1
+                                                  staticFriction 0.05
+                                                }
+                                                endPoint SolidReference {
+                                                  solidName "L2_XX_Ball"
+                                                }
+                                              }
+                                            ]
+                                            name "left_foot_heel_down_y_solid"
+                                            physics Physics {
+                                              density -1
+                                              mass 0.001
+                                              centerOfMass [
+                                                0 0 0
+                                              ]
+                                              inertiaMatrix [
+                                                1e-06 1e-06 1e-06
+                                                0 0 0
+                                              ]
+                                            }
+                                          }
+                                        }
+                                        HingeJoint {
+                                          jointParameters HingeJointParameters {
+                                            axis 0 1 0
+                                            anchor -0.029 0.024 0.0175
+                                            staticFriction 0.05
+                                          }
+                                          endPoint Solid {
+                                            translation -0.029 0.024 0.0175
+                                            rotation 0 1 0 0
+                                            children [
+                                              HingeJoint {
+                                                jointParameters HingeJointParameters {
+                                                  axis 0 0 1
+                                                  staticFriction 0.05
+                                                }
+                                                endPoint SolidReference {
+                                                  solidName "L1_XX_Ball"
+                                                }
+                                              }
+                                            ]
+                                            name "left_foot_heel_up_y_solid"
+                                            physics Physics {
+                                              density -1
+                                              mass 0.001
+                                              centerOfMass [
+                                                0 0 0
+                                              ]
+                                              inertiaMatrix [
+                                                1e-06 1e-06 1e-06
+                                                0 0 0
+                                              ]
+                                            }
+                                          }
+                                        }
+                                        Shape {
+                                          appearance DEF left_foot_link_material PBRAppearance {
+                                            baseColor 0.75294 0.75294 0.75294
+                                            roughness 1
+                                            metalness 0
+                                          }
+                                          geometry DEF Left_Foot Mesh {
+                                            url [
+                                              "./K1_meshes/Left_Foot.STL"
+                                            ]
+                                          }
+                                        }
+                                      ]
+                                      name "left_foot_link"
+                                      boundingObject Pose {
+                                        translation 0.014 0 -0.02
+                                        children [
+                                          Box {
+                                            size 0.16 0.07 0.013
+                                          }
+                                        ]
+                                      }
+                                      physics Physics {
+                                        density -1
+                                        mass 0.38305
+                                        centerOfMass [
+                                          7.4e-05 -4e-06 -0.007503
+                                        ]
+                                        inertiaMatrix [
+                                          0.000202 0.000741 0.000785
+                                          0 -5.3e-05 0
+                                        ]
+                                      }
+                                    }
+                                  }
+                                ]
+                                name "Left_Ankle_Cross"
+                                physics Physics {
+                                  density -1
+                                  mass 0.038836
+                                  centerOfMass [
+                                    0 0 0
+                                  ]
+                                  inertiaMatrix [
+                                    2e-06 4e-06 4e-06
+                                    0 0 0
+                                  ]
+                                }
+                              }
+                            }
+                            HingeJoint {
+                              jointParameters HingeJointParameters {
+                                axis 0 1 0
+                                anchor -0.001471 0.0242 -0.08164
+                              }
+                              device [
+                                RotationalMotor {
+                                  name "Left_Crank_Up"
+                                  maxTorque 10000
+                                }
+                                PositionSensor {
+                                  name "Left_Crank_Up_sensor"
+                                }
+                              ]
+                              endPoint Solid {
+                                translation -0.001471 0.0242 -0.08164
+                                rotation 0 1 0 0
+                                children [
+                                  Shape {
+                                    appearance DEF Left_Crank_Up_material PBRAppearance {
+                                      baseColor 0.75294 0.75294 0.75294
+                                      roughness 1
+                                      metalness 0
+                                    }
+                                    geometry DEF Left_Crank_Up Mesh {
+                                      url [
+                                        "./K1_meshes/Left_Crank_Up.STL"
+                                      ]
+                                    }
+                                  }
+                                  HingeJoint {
+                                    jointParameters HingeJointParameters {
+                                      anchor 0.040849 0 -0.003519
+                                    }
+                                    endPoint Solid {
+                                      translation 0.040849 0 -0.003519
+                                      rotation 1 0 0 0
+                                      children [
+                                        Shape {
+                                          appearance DEF L1_X_Ball_material PBRAppearance {
+                                            baseColor 0.69804 0.69804 0.69804
+                                            roughness 1
+                                            metalness 0
+                                          }
+                                          geometry DEF L1_X_Ball Mesh {
+                                            url [
+                                              "./K1_meshes/L1_X_Ball.STL"
+                                            ]
+                                          }
+                                        }
+                                        HingeJoint {
+                                          jointParameters HingeJointParameters {
+                                            axis 0 1 0
+                                          }
+                                          endPoint Solid {
+                                            rotation 0 1 0 0
+                                            children [
+                                              Shape {
+                                                appearance DEF L1_Y_Ball_material PBRAppearance {
+                                                  baseColor 0.69804 0.69804 0.69804
+                                                  roughness 1
+                                                  metalness 0
+                                                }
+                                                geometry DEF L1_Y_Ball Mesh {
+                                                  url [
+                                                    "./K1_meshes/L1_Y_Ball.STL"
+                                                  ]
+                                                }
+                                              }
+                                              HingeJoint {
+                                                jointParameters HingeJointParameters {
+                                                  axis 0 0 1
+                                                }
+                                                endPoint Solid {
+                                                  children [
+                                                    Shape {
+                                                      appearance DEF Left_Link_Long_material PBRAppearance {
+                                                        baseColor 0.75294 0.75294 0.75294
+                                                        roughness 1
+                                                        metalness 0
+                                                      }
+                                                      geometry DEF Left_Link_Long Mesh {
+                                                        url [
+                                                          "./K1_meshes/Left_Link_Long.STL"
+                                                        ]
+                                                      }
+                                                    }
+                                                    HingeJoint {
+                                                      jointParameters HingeJointParameters {
+                                                        anchor -0.068181 0 -0.14253
+                                                      }
+                                                      endPoint Solid {
+                                                        translation -0.068181 0 -0.14253
+                                                        rotation 1 0 0 0
+                                                        children [
+                                                          Shape {
+                                                            appearance DEF L1_XX_Ball_material PBRAppearance {
+                                                              baseColor 0.69804 0.69804 0.69804
+                                                              roughness 1
+                                                              metalness 0
+                                                            }
+                                                            geometry DEF L1_XX_Ball Mesh {
+                                                              url [
+                                                                "./K1_meshes/L1_XX_Ball.STL"
+                                                              ]
+                                                            }
+                                                          }
+                                                        ]
+                                                        name "L1_XX_Ball"
+                                                        physics Physics {
+                                                          density -1
+                                                          mass 0.000113
+                                                          centerOfMass [
+                                                            0 0 0
+                                                          ]
+                                                          inertiaMatrix [
+                                                            4.0715e-10 4.0715e-10 4.0715e-10
+                                                            2.8699e-42 6.3724e-58 2.2959e-41
+                                                          ]
+                                                        }
+                                                      }
+                                                    }
+                                                  ]
+                                                  name "Left_Link_Long"
+                                                  physics Physics {
+                                                    density -1
+                                                    mass 0.041131
+                                                    centerOfMass [
+                                                      -0.025542 0 -0.07413
+                                                    ]
+                                                    inertiaMatrix [
+                                                      0.000325 0.00038 5.5e-05
+                                                      0 0.000128 0
+                                                    ]
+                                                  }
+                                                }
+                                              }
+                                            ]
+                                            name "L1_Y_Ball"
+                                            physics Physics {
+                                              density -1
+                                              mass 0.000113
+                                              centerOfMass [
+                                                0 0 0
+                                              ]
+                                              inertiaMatrix [
+                                                4.0715e-10 4.0715e-10 4.0715e-10
+                                                -2.2959e-41 -3.1862e-57 5.7397e-42
+                                              ]
+                                            }
+                                          }
+                                        }
+                                      ]
+                                      name "L1_X_Ball"
+                                      physics Physics {
+                                        density -1
+                                        mass 0.000113
+                                        centerOfMass [
+                                          0 0 0
+                                        ]
+                                        inertiaMatrix [
+                                          4.0715e-10 4.0715e-10 4.0715e-10
+                                          -2.2959e-41 -3.1862e-57 5.7397e-42
+                                        ]
+                                      }
+                                    }
+                                  }
+                                ]
+                                name "Left_Crank_Up"
+                                physics Physics {
+                                  density -1
+                                  mass 0.052541
+                                  centerOfMass [
+                                    0.012562 0.005816 -0.001082
+                                  ]
+                                  inertiaMatrix [
+                                    6e-06 3.2e-05 3e-05
+                                    4e-06 -2e-06 0
+                                  ]
+                                }
+                              }
+                            }
+                            HingeJoint {
+                              jointParameters HingeJointParameters {
+                                axis 0 1 0
+                                anchor -0.009678 -0.0238 -0.14007
+                              }
+                              device [
+                                RotationalMotor {
+                                  name "Left_Crank_Down"
+                                  maxTorque 10000
+                                }
+                                PositionSensor {
+                                  name "Left_Crank_Down_sensor"
+                                }
+                              ]
+                              endPoint Solid {
+                                translation -0.009678 -0.0238 -0.14007
+                                rotation 0 1 0 0
+                                children [
+                                  Shape {
+                                    appearance DEF Left_Crank_Down_material PBRAppearance {
+                                      baseColor 0.75294 0.75294 0.75294
+                                      roughness 1
+                                      metalness 0
+                                    }
+                                    geometry DEF Left_Crank_Down Mesh {
+                                      url [
+                                        "./K1_meshes/Left_Crank_Down.STL"
+                                      ]
+                                    }
+                                  }
+                                  HingeJoint {
+                                    jointParameters HingeJointParameters {
+                                      anchor 0.033003 0 -0.024327
+                                    }
+                                    endPoint Solid {
+                                      translation 0.033003 0 -0.024327
+                                      rotation 1 0 0 0
+                                      children [
+                                        Shape {
+                                          appearance DEF L2_X_Ball_material PBRAppearance {
+                                            baseColor 0.69804 0.69804 0.69804
+                                            roughness 1
+                                            metalness 0
+                                          }
+                                          geometry DEF L2_X_Ball Mesh {
+                                            url [
+                                              "./K1_meshes/L2_X_Ball.STL"
+                                            ]
+                                          }
+                                        }
+                                        HingeJoint {
+                                          jointParameters HingeJointParameters {
+                                            axis 0 1 0
+                                          }
+                                          endPoint Solid {
+                                            rotation 0 1 0 0
+                                            children [
+                                              Shape {
+                                                appearance DEF L2_Y_Ball_material PBRAppearance {
+                                                  baseColor 0.69804 0.69804 0.69804
+                                                  roughness 1
+                                                  metalness 0
+                                                }
+                                                geometry DEF L2_Y_Ball Mesh {
+                                                  url [
+                                                    "./K1_meshes/L2_Y_Ball.STL"
+                                                  ]
+                                                }
+                                              }
+                                              HingeJoint {
+                                                jointParameters HingeJointParameters {
+                                                  axis 0 0 1
+                                                }
+                                                endPoint Solid {
+                                                  children [
+                                                    Shape {
+                                                      appearance DEF Left_Link_Short_material PBRAppearance {
+                                                        baseColor 0.75294 0.75294 0.75294
+                                                        roughness 1
+                                                        metalness 0
+                                                      }
+                                                      geometry DEF Left_Link_Short Mesh {
+                                                        url [
+                                                          "./K1_meshes/Left_Link_Short.STL"
+                                                        ]
+                                                      }
+                                                    }
+                                                    HingeJoint {
+                                                      jointParameters HingeJointParameters {
+                                                        anchor -0.052128 0 -0.063298
+                                                      }
+                                                      endPoint Solid {
+                                                        translation -0.052128 0 -0.063298
+                                                        rotation 1 0 0 0
+                                                        children [
+                                                          Shape {
+                                                            appearance DEF L2_XX_Ball_material PBRAppearance {
+                                                              baseColor 0.69804 0.69804 0.69804
+                                                              roughness 1
+                                                              metalness 0
+                                                            }
+                                                            geometry DEF L2_XX_Ball Mesh {
+                                                              url [
+                                                                "./K1_meshes/L2_XX_Ball.STL"
+                                                              ]
+                                                            }
+                                                          }
+                                                        ]
+                                                        name "L2_XX_Ball"
+                                                        physics Physics {
+                                                          density -1
+                                                          mass 0.000113
+                                                          centerOfMass [
+                                                            0 0 0
+                                                          ]
+                                                          inertiaMatrix [
+                                                            4.0715e-10 4.0715e-10 4.0715e-10
+                                                            2.8699e-42 0 2.2959e-41
+                                                          ]
+                                                        }
+                                                      }
+                                                    }
+                                                  ]
+                                                  name "Left_Link_Short"
+                                                  physics Physics {
+                                                    density -1
+                                                    mass 0.025196
+                                                    centerOfMass [
+                                                      -0.024428 0 -0.032499
+                                                    ]
+                                                    inertiaMatrix [
+                                                      4.1e-05 6.7e-05 2.6e-05
+                                                      0 3.2e-05 0
+                                                    ]
+                                                  }
+                                                }
+                                              }
+                                            ]
+                                            name "L2_Y_Ball"
+                                            physics Physics {
+                                              density -1
+                                              mass 0.000113
+                                              centerOfMass [
+                                                0 0 0
+                                              ]
+                                              inertiaMatrix [
+                                                4.0715e-10 4.0715e-10 4.0715e-10
+                                                2.2959e-41 -7.9655e-59 -1.7937e-43
+                                              ]
+                                            }
+                                          }
+                                        }
+                                      ]
+                                      name "L2_X_Ball"
+                                      physics Physics {
+                                        density -1
+                                        mass 0.000113
+                                        centerOfMass [
+                                          0 0 0
+                                        ]
+                                        inertiaMatrix [
+                                          4.0715e-10 4.0715e-10 4.0715e-10
+                                          2.2959e-41 -7.9655e-59 -1.7937e-43
+                                        ]
+                                      }
+                                    }
+                                  }
+                                ]
+                                name "Left_Crank_Down"
+                                physics Physics {
+                                  density -1
+                                  mass 0.052541
+                                  centerOfMass [
+                                    0.010864 -0.005634 -0.008008
+                                  ]
+                                  inertiaMatrix [
+                                    1.5e-05 3.2e-05 2.2e-05
+                                    -3e-06 -1.2e-05 2e-06
+                                  ]
+                                }
+                              }
+                            }
+                          ]
+                          name "Left_Shank"
+                          boundingObject USE Left_Shank
+                          physics Physics {
+                            density -1
+                            mass 1.3119
+                            centerOfMass [
+                              -0.000811 0.003146 -0.10922
+                            ]
+                            inertiaMatrix [
+                              0.01989 0.019924 0.001022
+                              4e-06 0.000315 -0.000163
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                    name "Left_Hip_Yaw"
+                    boundingObject USE Left_Hip_Yaw
+                    physics Physics {
+                      density -1
+                      mass 1.5591
+                      centerOfMass [
+                        -0.008474 -0.004049 -0.087906
+                      ]
+                      inertiaMatrix [
+                        0.015786 0.01614 0.001551
+                        9.6e-05 0.001546 0.000745
+                      ]
+                    }
+                  }
+                }
+              ]
+              name "Left_Hip_Roll"
+              boundingObject USE Left_Hip_Roll
+              physics Physics {
+                density -1
+                mass 0.127825
+                centerOfMass [
+                  0.023585 4.9e-05 -0.024996
+                ]
+                inertiaMatrix [
+                  0.000191 0.000262 0.00015
+                  0 -4.8e-05 0
+                ]
+              }
+            }
+          }
+        ]
+        name "Left_Hip_Pitch"
+        boundingObject USE Left_Hip_Pitch
+        physics Physics {
+          density -1
+          mass 0.64068
+          centerOfMass [
+            -0.010093 -0.001993 -0.024713
+          ]
+          inertiaMatrix [
+            0.000781 0.000987 0.000604
+            4e-06 0.000167 8e-06
+          ]
+        }
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        axis 0 1 0
+        anchor 0 -0.096 -0.062
+      }
+      device [
+        RotationalMotor {
+          name "Right_Hip_Pitch"
+          maxTorque 10000
+        }
+        PositionSensor {
+          name "Right_Hip_Pitch_sensor"
+        }
+      ]
+      endPoint Solid {
+        translation 0 -0.096 -0.062
+        rotation 0 1 0 0
+        children [
+          Shape {
+            appearance DEF Right_Hip_Pitch_material PBRAppearance {
+              baseColor 0.75294 0.75294 0.75294
+              roughness 1
+              metalness 0
+            }
+            geometry DEF Right_Hip_Pitch Mesh {
+              url [
+                "./K1_meshes/Right_Hip_Pitch.STL"
+              ]
+            }
+          }
+          HingeJoint {
+            jointParameters HingeJointParameters {
+              anchor 0 0 -0.026
+            }
+            device [
+              RotationalMotor {
+                name "Right_Hip_Roll"
+                maxTorque 10000
+              }
+              PositionSensor {
+                name "Right_Hip_Roll_sensor"
+              }
+            ]
+            endPoint Solid {
+              translation 0 0 -0.026
+              rotation 1 0 0 0
+              children [
+                Shape {
+                  appearance DEF Right_Hip_Roll_material PBRAppearance {
+                    baseColor 0.75294 0.75294 0.75294
+                    roughness 1
+                    metalness 0
+                  }
+                  geometry DEF Right_Hip_Roll Mesh {
+                    url [
+                      "./K1_meshes/Right_Hip_Roll.STL"
+                    ]
+                  }
+                }
+                HingeJoint {
+                  jointParameters HingeJointParameters {
+                    axis 0 0 1
+                    anchor 0.012 0 -0.0485
+                  }
+                  device [
+                    RotationalMotor {
+                      name "Right_Hip_Yaw"
+                      maxTorque 10000
+                    }
+                    PositionSensor {
+                      name "Right_Hip_Yaw_sensor"
+                    }
+                  ]
+                  endPoint Solid {
+                    translation 0.012 0 -0.0485
+                    children [
+                      Shape {
+                        appearance DEF Right_Hip_Yaw_material PBRAppearance {
+                          baseColor 0.75294 0.75294 0.75294
+                          roughness 1
+                          metalness 0
+                        }
+                        geometry DEF Right_Hip_Yaw Mesh {
+                          url [
+                            "./K1_meshes/Right_Hip_Yaw.STL"
+                          ]
+                        }
+                      }
+                      HingeJoint {
+                        jointParameters HingeJointParameters {
+                          axis 0 1 0
+                          anchor -0.014 0 -0.117
+                        }
+                        device [
+                          RotationalMotor {
+                            name "Right_Knee_Pitch"
+                            maxTorque 10000
+                          }
+                          PositionSensor {
+                            name "Right_Knee_Pitch_sensor"
+                          }
+                        ]
+                        endPoint Solid {
+                          translation -0.014 0 -0.117
+                          rotation 0 1 0 0
+                          children [
+                            Shape {
+                              appearance DEF Right_Shank_material PBRAppearance {
+                                baseColor 0.75294 0.75294 0.75294
+                                roughness 1
+                                metalness 0
+                              }
+                              geometry DEF Right_Shank Mesh {
+                                url [
+                                  "./K1_meshes/Right_Shank.STL"
+                                ]
+                              }
+                            }
+                            HingeJoint {
+                              jointParameters HingeJointParameters {
+                                axis 0 1 0
+                                anchor 0.000197 -0.0002 -0.24519
+                              }
+                              endPoint Solid {
+                                translation 0.000197 -0.0002 -0.24519
+                                rotation 0 1 0 0
+                                children [
+                                  Shape {
+                                    appearance DEF Right_Ankle_Cross_material PBRAppearance {
+                                      baseColor 0.75294 0.75294 0.75294
+                                      roughness 1
+                                      metalness 0
+                                    }
+                                    geometry DEF Right_Ankle_Cross Mesh {
+                                      url [
+                                        "./K1_meshes/Right_Ankle_Cross.STL"
+                                      ]
+                                    }
+                                  }
+                                  HingeJoint {
+                                    jointParameters HingeJointParameters {
+                                    }
+                                    endPoint Solid {
+                                      rotation 1 0 0 0
+                                      children [
+                                        HingeJoint {
+                                          jointParameters HingeJointParameters {
+                                            axis 0 1 0
+                                            anchor -0.029 0.024 0.0175
+                                            staticFriction 0.05
+                                          }
+                                          endPoint Solid {
+                                            translation -0.029 0.024 0.0175
+                                            rotation 0 1 0 0
+                                            children [
+                                              HingeJoint {
+                                                jointParameters HingeJointParameters {
+                                                  axis 0 0 1
+                                                  staticFriction 0.05
+                                                }
+                                                endPoint SolidReference {
+                                                  solidName "R2_XX_Ball"
+                                                }
+                                              }
+                                            ]
+                                            name "right_foot_heel_down_y_solid"
+                                            physics Physics {
+                                              density -1
+                                              mass 0.001
+                                              centerOfMass [
+                                                0 0 0
+                                              ]
+                                              inertiaMatrix [
+                                                1e-06 1e-06 1e-06
+                                                0 0 0
+                                              ]
+                                            }
+                                          }
+                                        }
+                                        HingeJoint {
+                                          jointParameters HingeJointParameters {
+                                            axis 0 1 0
+                                            anchor -0.029 -0.024 0.0175
+                                            staticFriction 0.05
+                                          }
+                                          endPoint Solid {
+                                            translation -0.029 -0.024 0.0175
+                                            rotation 0 1 0 0
+                                            children [
+                                              HingeJoint {
+                                                jointParameters HingeJointParameters {
+                                                  axis 0 0 1
+                                                  staticFriction 0.05
+                                                }
+                                                endPoint SolidReference {
+                                                  solidName "R1_XX_Ball"
+                                                }
+                                              }
+                                            ]
+                                            name "right_foot_heel_up_y_solid"
+                                            physics Physics {
+                                              density -1
+                                              mass 0.001
+                                              centerOfMass [
+                                                0 0 0
+                                              ]
+                                              inertiaMatrix [
+                                                1e-06 1e-06 1e-06
+                                                0 0 0
+                                              ]
+                                            }
+                                          }
+                                        }
+                                        Shape {
+                                          appearance DEF right_foot_link_material PBRAppearance {
+                                            baseColor 0.75294 0.75294 0.75294
+                                            roughness 1
+                                            metalness 0
+                                          }
+                                          geometry DEF Right_Foot Mesh {
+                                            url [
+                                              "./K1_meshes/Right_Foot.STL"
+                                            ]
+                                          }
+                                        }
+                                      ]
+                                      name "right_foot_link"
+                                      boundingObject Pose {
+                                        translation 0.014 0 -0.02
+                                        children [
+                                          Box {
+                                            size 0.16 0.07 0.013
+                                          }
+                                        ]
+                                      }
+                                      physics Physics {
+                                        density -1
+                                        mass 0.38637
+                                        centerOfMass [
+                                          -0.000178 -2e-06 -0.007291
+                                        ]
+                                        inertiaMatrix [
+                                          0.000205 0.000745 0.00079
+                                          0 -5.4e-05 0
+                                        ]
+                                      }
+                                    }
+                                  }
+                                ]
+                                name "Right_Ankle_Cross"
+                                physics Physics {
+                                  density -1
+                                  mass 0.038836
+                                  centerOfMass [
+                                    0 0 0
+                                  ]
+                                  inertiaMatrix [
+                                    2e-06 4e-06 4e-06
+                                    0 0 0
+                                  ]
+                                }
+                              }
+                            }
+                            HingeJoint {
+                              jointParameters HingeJointParameters {
+                                axis 0 1 0
+                                anchor -0.001471 -0.0242 -0.08164
+                              }
+                              device [
+                                RotationalMotor {
+                                  name "Right_Crank_Up"
+                                  maxTorque 10000
+                                }
+                                PositionSensor {
+                                  name "Right_Crank_Up_sensor"
+                                }
+                              ]
+                              endPoint Solid {
+                                translation -0.001471 -0.0242 -0.08164
+                                rotation 0 1 0 0
+                                children [
+                                  Shape {
+                                    appearance DEF Right_Crank_Up_material PBRAppearance {
+                                      baseColor 0.75294 0.75294 0.75294
+                                      roughness 1
+                                      metalness 0
+                                    }
+                                    geometry DEF Right_Crank_Up Mesh {
+                                      url [
+                                        "./K1_meshes/Right_Crank_Up.STL"
+                                      ]
+                                    }
+                                  }
+                                  HingeJoint {
+                                    jointParameters HingeJointParameters {
+                                      anchor 0.040849 0 -0.003519
+                                    }
+                                    endPoint Solid {
+                                      translation 0.040849 0 -0.003519
+                                      rotation 1 0 0 0
+                                      children [
+                                        Shape {
+                                          appearance DEF R1_X_Ball_material PBRAppearance {
+                                            baseColor 0.69804 0.69804 0.69804
+                                            roughness 1
+                                            metalness 0
+                                          }
+                                          geometry DEF R1_X_Ball Mesh {
+                                            url [
+                                              "./K1_meshes/R1_X_Ball.STL"
+                                            ]
+                                          }
+                                        }
+                                        HingeJoint {
+                                          jointParameters HingeJointParameters {
+                                            axis 0 1 0
+                                          }
+                                          endPoint Solid {
+                                            rotation 0 1 0 0
+                                            children [
+                                              Shape {
+                                                appearance DEF R1_Y_Ball_material PBRAppearance {
+                                                  baseColor 0.69804 0.69804 0.69804
+                                                  roughness 1
+                                                  metalness 0
+                                                }
+                                                geometry DEF R1_Y_Ball Mesh {
+                                                  url [
+                                                    "./K1_meshes/R1_Y_Ball.STL"
+                                                  ]
+                                                }
+                                              }
+                                              HingeJoint {
+                                                jointParameters HingeJointParameters {
+                                                  axis 0 0 1
+                                                }
+                                                endPoint Solid {
+                                                  children [
+                                                    Shape {
+                                                      appearance DEF Right_Link_Long_material PBRAppearance {
+                                                        baseColor 0.75294 0.75294 0.75294
+                                                        roughness 1
+                                                        metalness 0
+                                                      }
+                                                      geometry DEF Right_Link_Long Mesh {
+                                                        url [
+                                                          "./K1_meshes/Right_Link_Long.STL"
+                                                        ]
+                                                      }
+                                                    }
+                                                    HingeJoint {
+                                                      jointParameters HingeJointParameters {
+                                                        anchor -0.068181 0 -0.14253
+                                                      }
+                                                      endPoint Solid {
+                                                        translation -0.068181 0 -0.14253
+                                                        rotation 1 0 0 0
+                                                        children [
+                                                          Shape {
+                                                            appearance DEF R1_XX_Ball_material PBRAppearance {
+                                                              baseColor 0.69804 0.69804 0.69804
+                                                              roughness 1
+                                                              metalness 0
+                                                            }
+                                                            geometry DEF R1_XX_Ball Mesh {
+                                                              url [
+                                                                "./K1_meshes/R1_XX_Ball.STL"
+                                                              ]
+                                                            }
+                                                          }
+                                                        ]
+                                                        name "R1_XX_Ball"
+                                                        physics Physics {
+                                                          density -1
+                                                          mass 0.000113
+                                                          centerOfMass [
+                                                            0 0 0
+                                                          ]
+                                                          inertiaMatrix [
+                                                            4.0715e-10 4.0715e-10 4.0715e-10
+                                                            2.8699e-42 1.0196e-56 2.2959e-41
+                                                          ]
+                                                        }
+                                                      }
+                                                    }
+                                                  ]
+                                                  name "Right_Link_Long"
+                                                  physics Physics {
+                                                    density -1
+                                                    mass 0.041131
+                                                    centerOfMass [
+                                                      -0.025542 0 -0.07413
+                                                    ]
+                                                    inertiaMatrix [
+                                                      0.000325 0.00038 5.5e-05
+                                                      0 0.000128 0
+                                                    ]
+                                                  }
+                                                }
+                                              }
+                                            ]
+                                            name "R1_Y_Ball"
+                                            physics Physics {
+                                              density -1
+                                              mass 0.000113
+                                              centerOfMass [
+                                                0 0 0
+                                              ]
+                                              inertiaMatrix [
+                                                4.0715e-10 4.0715e-10 4.0715e-10
+                                                -2.2959e-41 -2.5489e-57 5.7397e-42
+                                              ]
+                                            }
+                                          }
+                                        }
+                                      ]
+                                      name "R1_X_Ball"
+                                      physics Physics {
+                                        density -1
+                                        mass 0.000113
+                                        centerOfMass [
+                                          0 0 0
+                                        ]
+                                        inertiaMatrix [
+                                          4.0715e-10 4.0715e-10 4.0715e-10
+                                          -2.2959e-41 -2.5489e-57 5.7397e-42
+                                        ]
+                                      }
+                                    }
+                                  }
+                                ]
+                                name "Right_Crank_Up"
+                                physics Physics {
+                                  density -1
+                                  mass 0.052541
+                                  centerOfMass [
+                                    0.013446 -0.005634 -0.001158
+                                  ]
+                                  inertiaMatrix [
+                                    6e-06 3.2e-05 3e-05
+                                    -4e-06 -2e-06 0
+                                  ]
+                                }
+                              }
+                            }
+                            HingeJoint {
+                              jointParameters HingeJointParameters {
+                                axis 0 1 0
+                                anchor -0.009678 0.0238 -0.14007
+                              }
+                              device [
+                                RotationalMotor {
+                                  name "Right_Crank_Down"
+                                  maxTorque 10000
+                                }
+                                PositionSensor {
+                                  name "Right_Crank_Down_sensor"
+                                }
+                              ]
+                              endPoint Solid {
+                                translation -0.009678 0.0238 -0.14007
+                                rotation 0 1 0 0
+                                children [
+                                  Shape {
+                                    appearance DEF Right_Crank_Down_material PBRAppearance {
+                                      baseColor 0.75294 0.75294 0.75294
+                                      roughness 1
+                                      metalness 0
+                                    }
+                                    geometry DEF Right_Crank_Down Mesh {
+                                      url [
+                                        "./K1_meshes/Right_Crank_Down.STL"
+                                      ]
+                                    }
+                                  }
+                                  HingeJoint {
+                                    jointParameters HingeJointParameters {
+                                      anchor 0.033003 0 -0.024327
+                                    }
+                                    endPoint Solid {
+                                      translation 0.033003 0 -0.024327
+                                      rotation 1 0 0 0
+                                      children [
+                                        Shape {
+                                          appearance DEF R2_X_Ball_material PBRAppearance {
+                                            baseColor 0.69804 0.69804 0.69804
+                                            roughness 1
+                                            metalness 0
+                                          }
+                                          geometry DEF R2_X_Ball Mesh {
+                                            url [
+                                              "./K1_meshes/R2_X_Ball.STL"
+                                            ]
+                                          }
+                                        }
+                                        HingeJoint {
+                                          jointParameters HingeJointParameters {
+                                            axis 0 1 0
+                                          }
+                                          endPoint Solid {
+                                            rotation 0 1 0 0
+                                            children [
+                                              Shape {
+                                                appearance DEF R2_Y_Ball_material PBRAppearance {
+                                                  baseColor 0.69804 0.69804 0.69804
+                                                  roughness 1
+                                                  metalness 0
+                                                }
+                                                geometry DEF R2_Y_Ball Mesh {
+                                                  url [
+                                                    "./K1_meshes/R2_Y_Ball.STL"
+                                                  ]
+                                                }
+                                              }
+                                              HingeJoint {
+                                                jointParameters HingeJointParameters {
+                                                  axis 0 0 1
+                                                }
+                                                endPoint Solid {
+                                                  children [
+                                                    Shape {
+                                                      appearance DEF Right_Link_Short_material PBRAppearance {
+                                                        baseColor 0.75294 0.75294 0.75294
+                                                        roughness 1
+                                                        metalness 0
+                                                      }
+                                                      geometry DEF Right_Link_Short Mesh {
+                                                        url [
+                                                          "./K1_meshes/Right_Link_Short.STL"
+                                                        ]
+                                                      }
+                                                    }
+                                                    HingeJoint {
+                                                      jointParameters HingeJointParameters {
+                                                        anchor -0.052128 0 -0.063298
+                                                      }
+                                                      endPoint Solid {
+                                                        translation -0.052128 0 -0.063298
+                                                        rotation 1 0 0 0
+                                                        children [
+                                                          Shape {
+                                                            appearance DEF R2_XX_Ball_material PBRAppearance {
+                                                              baseColor 0.69804 0.69804 0.69804
+                                                              roughness 1
+                                                              metalness 0
+                                                            }
+                                                            geometry DEF R2_XX_Ball Mesh {
+                                                              url [
+                                                                "./K1_meshes/R2_XX_Ball.STL"
+                                                              ]
+                                                            }
+                                                          }
+                                                        ]
+                                                        name "R2_XX_Ball"
+                                                        physics Physics {
+                                                          density -1
+                                                          mass 0.000113
+                                                          centerOfMass [
+                                                            0 0 0
+                                                          ]
+                                                          inertiaMatrix [
+                                                            4.0715e-10 4.0715e-10 4.0715e-10
+                                                            2.8699e-42 -2.0392e-56 2.2959e-41
+                                                          ]
+                                                        }
+                                                      }
+                                                    }
+                                                  ]
+                                                  name "Right_Link_Short"
+                                                  physics Physics {
+                                                    density -1
+                                                    mass 0.025196
+                                                    centerOfMass [
+                                                      -0.024428 0 -0.032499
+                                                    ]
+                                                    inertiaMatrix [
+                                                      4.1e-05 6.7e-05 2.6e-05
+                                                      0 3.2e-05 0
+                                                    ]
+                                                  }
+                                                }
+                                              }
+                                            ]
+                                            name "R2_Y_Ball"
+                                            physics Physics {
+                                              density -1
+                                              mass 0.000113
+                                              centerOfMass [
+                                                0 0 0
+                                              ]
+                                              inertiaMatrix [
+                                                4.0715e-10 4.0715e-10 4.0715e-10
+                                                2.2959e-41 0 -1.7937e-43
+                                              ]
+                                            }
+                                          }
+                                        }
+                                      ]
+                                      name "R2_X_Ball"
+                                      physics Physics {
+                                        density -1
+                                        mass 0.000113
+                                        centerOfMass [
+                                          0 0 0
+                                        ]
+                                        inertiaMatrix [
+                                          4.0715e-10 4.0715e-10 4.0715e-10
+                                          2.2959e-41 0 -1.7937e-43
+                                        ]
+                                      }
+                                    }
+                                  }
+                                ]
+                                name "Right_Crank_Down"
+                                physics Physics {
+                                  density -1
+                                  mass 0.052541
+                                  centerOfMass [
+                                    0.010864 0.005634 -0.008008
+                                  ]
+                                  inertiaMatrix [
+                                    1.5e-05 3.2e-05 2.2e-05
+                                    3e-06 -1.2e-05 -2e-06
+                                  ]
+                                }
+                              }
+                            }
+                          ]
+                          name "Right_Shank"
+                          boundingObject USE Right_Shank
+                          physics Physics {
+                            density -1
+                            mass 1.312
+                            centerOfMass [
+                              -0.000805 -0.003146 -0.109215
+                            ]
+                            inertiaMatrix [
+                              0.01989 0.019924 0.001022
+                              -4e-06 0.000314 0.000163
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                    name "Right_Hip_Yaw"
+                    boundingObject USE Right_Hip_Yaw
+                    physics Physics {
+                      density -1
+                      mass 1.5592
+                      centerOfMass [
+                        -0.008475 0.004039 -0.087906
+                      ]
+                      inertiaMatrix [
+                        0.015786 0.01614 0.001551
+                        -9.6e-05 0.001546 -0.000745
+                      ]
+                    }
+                  }
+                }
+              ]
+              name "Right_Hip_Roll"
+              boundingObject USE Right_Hip_Roll
+              physics Physics {
+                density -1
+                mass 0.127825
+                centerOfMass [
+                  0.023585 4.9e-05 -0.024996
+                ]
+                inertiaMatrix [
+                  0.000191 0.000262 0.00015
+                  0 -4.8e-05 0
+                ]
+              }
+            }
+          }
+        ]
+        name "Right_Hip_Pitch"
+        boundingObject USE Right_Hip_Pitch
+        physics Physics {
+          density -1
+          mass 0.6413
+          centerOfMass [
+            -0.010065 0.002009 -0.024739
+          ]
+          inertiaMatrix [
+            0.000782 0.000988 0.000604
+            -4e-06 0.000166 -9e-06
+          ]
+        }
+      }
+    }
+    ]
+    name IS name
+    boundingObject USE Trunk
+  physics Physics {
+    density -1
+    mass 6.3921
+    centerOfMass [
+      -0.004339 -0.000655 0.065686
+    ]
+    inertiaMatrix [
+      0.096159 0.089512 0.020187
+      -3.9e-05 -0.002091 -0.000567
+    ]
+  }
+    controller IS controller
+    controllerArgs IS controllerArgs
+    supervisor IS supervisor
+  }
+}

@@ -1,0 +1,77 @@
+#VRML_SIM R2023b utf8
+# RoboCup field with Booster K1 robots, driven by Booster's `mck` runner over the SDK/DDS interface.
+# Open this in Booster's Webots R2023b build (see docs/K1_WEBOTS_SETUP.md). Each K1's controller is
+# "<extern>", so run one `mck` instance per robot (targeting its `name`) to make it stand and walk.
+
+IMPORTABLE EXTERNPROTO "../protos/robocup_field/RoboCupBackground.proto"
+IMPORTABLE EXTERNPROTO "../protos/robocup_field/RobocupSoccerField.proto"
+IMPORTABLE EXTERNPROTO "../protos/robocup_field/RobocupTexturedSoccerBall.proto"
+IMPORTABLE EXTERNPROTO "../protos/robocup_field/lighting/RoboCupMainLight.proto"
+IMPORTABLE EXTERNPROTO "../protos/robocup_field/lighting/RoboCupOffLight.proto"
+IMPORTABLE EXTERNPROTO "../protos/robocup_field/lighting/RoboCupTopLight.proto"
+EXTERNPROTO "../protos/robot/K1/K1.proto"
+
+WorldInfo {
+  info [
+    "RoboCup field with Booster K1 robots."
+  ]
+  title "K1 RoboCup"
+  basicTimeStep 1
+  FPS 30
+  optimalThreadCount 8
+  contactProperties [
+    ContactProperties {
+      coulombFriction [
+        0.8
+      ]
+    }
+    ContactProperties {
+      material1 "grass"
+      coulombFriction [
+        0.8
+      ]
+      softCFM 0.03
+    }
+    ContactProperties {
+      material1 "grass"
+      material2 "robocup soccer ball"
+      coulombFriction [
+        0.5
+      ]
+      bounce 0.76
+      softCFM 0.05
+    }
+    ContactProperties {
+      material2 "robocup soccer ball"
+      bounce 0.76
+    }
+  ]
+}
+Viewpoint {
+  orientation -0.28 -0.30 0.91 4.67
+  position 1.70 5.70 4.20
+}
+RoboCupBackground {
+}
+RoboCupMainLight {
+}
+RoboCupOffLight {
+}
+RoboCupTopLight {
+}
+DEF FIELD RobocupSoccerField {
+  size "kid"
+}
+DEF BALL RobocupTexturedSoccerBall {
+  translation 1.38 0 0.0785
+}
+DEF BLUE_1 K1 {
+  translation 2.71 0 0.53
+  rotation 0 0 1 3.1415
+  name "K1_blue_1"
+}
+DEF RED_1 K1 {
+  translation -2.71 0 0.53
+  rotation 0 0 1 0
+  name "K1_red_1"
+}
