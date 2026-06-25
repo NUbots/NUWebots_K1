@@ -170,6 +170,18 @@ the following (every change is in **`NUbots_K1`**, and all are worth PR-ing upst
    transport works between the container (NUbots) and the host (`mck`). Without it the role connects but
    gets no `LowState` and the K1 doesn't move.
 
+**Code compile/runtime (Booster SDK dep):**
+
+10. `docker/Dockerfile` — add **`libtinyxml2-9`** to an `install-package` line. The image otherwise has only
+    the *static* `libtinyxml2.a`, but `libbooster_robotics_sdk.a` needs the *shared* `libtinyxml2.so.9` at
+    runtime, so any binary using `platform::Booster::HardwareIO` (e.g. `webots/keyboardwalk`) fails to start
+    with `libtinyxml2.so.9: cannot open shared object file`. (Only shows up once a role actually links the
+    SDK — the old NUgus `platform::Webots` role didn't.)
+
+Also note `roles/webots/keyboardwalk.role` must use the **K1/Booster** modules (`platform::Booster::HardwareIO`
++ `skill::K1Walk/K1GetUp/K1Look`), not the legacy `platform::Webots` (TCP `10001`) + `skill::Walk` — otherwise
+the binary tries to reach a NUgus TCP controller that doesn't exist for the K1.
+
 After these, `./b target generic && ./b configure && ./b build webots/keyboardwalk` builds
 `<user>/nubots:generic_k1` cleanly, separate from any NUgus image.
 
