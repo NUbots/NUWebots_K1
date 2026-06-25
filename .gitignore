@@ -19,3 +19,6 @@ controllers/optimisation/optimisation
 
 # Logs
 *.log
+
+# Local Claude Code editor settings
+.claude/
